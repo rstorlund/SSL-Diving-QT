@@ -1421,6 +1421,28 @@ ggplot(all_dives_clean, aes(x = Time_from_underwater_start, y = QT, colour = RR_
   ) +
   theme_minimal(base_size = 14)
 
+###Looking at the HR groupings
+library(dplyr)
+
+all_dives_clean %>%
+  group_by(RR_group) %>%
+  summarise(
+    mean_HR = mean(HR, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+#by individual
+library(dplyr)
+
+all_dives_clean %>%
+  group_by(Individual, RR_group) %>%
+  summarise(
+    mean_HR = mean(HR, na.rm = TRUE),
+    sd_HR = sd(HR, na.rm = TRUE),
+    n = sum(!is.na(HR)),
+    .groups = "drop"
+  )
+
 
 
 
